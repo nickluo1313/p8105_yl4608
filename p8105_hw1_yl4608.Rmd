@@ -95,12 +95,18 @@ data("penguins", package = "palmerpenguins")
 ```
 
 1. The data in this dataset, includes 
-`r names(penguins)`
+`r names(penguins)`.
 
 2. Values of important variables are below:
-```{r summary}
-summary(penguins)
-```
+
+species is a `r class(pull(penguins,species))` variable, it has the following values: `r levels(pull(penguins, species))`.
+
+island is a `r class(pull(penguins,island))` variable, it has the following values: `r levels(pull(penguins, island))`.
+
+bill_length_mm is a `r class(pull(penguins,bill_length_mm))` variable, it has range: `r range(pull(penguins,bill_length_mm),na.rm = TRUE)`.
+
+flipper_length_mm is a `r class(pull(penguins,flipper_length_mm))` variable, it has range: `r range(pull(penguins,flipper_length_mm),na.rm = TRUE)`.
+
 
 ```{r size_dataset, echo = FALSE}
 size = nrow(penguins) * ncol(penguins)
