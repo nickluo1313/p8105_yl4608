@@ -7,16 +7,21 @@ output: github_document
 
 # 1. Problem 1
 
-## 1.1 Q1
-create a data frame comprised of: 
+## Q1 create a data frame
+
+Load tidyverse
+
+```{r load}
+library(tidyverse)
+```
+
+create a data frame:
 a random sample of size 10 from a standard Normal distribution
 a logical vector indicating whether elements of the sample are greater than 0
 a character vector of length 10
 a factor vector of length 10, with 3 different factor “levels”
 
 ```{r dataframe}
-library(tidyverse)
-
 df = 
   tibble(
     x = rnorm(10),
@@ -24,30 +29,28 @@ df =
     vec_char = c('a','b','c','d','e','f','g','h','i','j'),
     vec_factor = factor(c('low','low','low','low','mod','mod','mod','high','high','high'))
   )
-
 df
 ```
 
 
-## 1.2 Q2
+## Q2 take the mean of each variable in your dataframe
 
-take the mean of each variable in your dataframe
+Use mean() and pull() functions to take means
 
 ```{r mean_dataframe}
 mean(pull(df,x))
 mean(pull(df,vec_logical))
 mean(pull(df,vec_char))
 mean(pull(df,vec_factor))
-
 ```
-1. for logical vectors, automatically coerce the type from logical to 1/0
+
+1. for logical vectors, R automatically coerce the type from logical to 1/0
 2. can't take mean for character vectors
 3. can't take mean for factor vectors
 
 
 
-
-## 1.3 Q3
+## Q3 As.numeric() function
 
 Write a code chunk that applies the as.numeric function to the logical, character, and factor variables (please show this chunk but not the output). 
 
@@ -60,13 +63,15 @@ as.numeric(pull(df,vec_factor))
 
 1. can't convert characters to numeric
 
-## 1.4 Q4
+## Q4 Convert more types
 
-convert the logical vector to numeric, and multiply the random sample by the result
-convert the logical vector to a factor, and multiply the random sample by the result
-convert the logical vector to a factor and then convert the result to numeric, and multiply the random sample by the result
+1. convert the logical vector to numeric, and multiply the random sample by the result.
 
-```{r convert, eval = FALSE}
+2.convert the logical vector to a factor, and multiply the random sample by the result.
+
+3. convert the logical vector to a factor and then convert the result to numeric, and multiply the random sample by the result.
+
+```{r convert}
 as.numeric(pull(df,vec_logical)) * pull(df,x)
 
 as.factor(pull(df,vec_logical)) * pull(df,x)
@@ -79,32 +84,34 @@ as.numeric(as.factor(pull(df,vec_logical))) * pull(df,x)
 
 # Problem 2
 
-## Q1
+## Q1 Short description of dataset
 
-Write a short description of the penguins dataset (not the penguins_raw dataset) using inline R code, including:
+Write a short description of the penguins dataset (not the penguins_raw dataset) using inline R code.
 
-the data in this dataset, including names / values of important variables
-the size of the dataset (using nrow and ncol)
-the mean flipper length
+load the dataset
 
-```{r}
+```{r load_dataset}
 data("penguins", package = "palmerpenguins")
 ```
 
-The data in this dataset, includes 
+1. The data in this dataset, includes 
 `r names(penguins)`
-Values of important variables are below:
-`r summary(penguins)`
+
+2. Values of important variables are below:
+```{r summary}
+summary(penguins)
+```
 
 ```{r size_dataset, echo = FALSE}
 size = nrow(penguins) * ncol(penguins)
 ```
-The size of the dataset is `r size` in penguins.
 
-The mean flipper length is `r mean(pull(penguins,flipper_length_mm),na.rm = TRUE) ` 
+3. The size of the dataset is `r size` in penguins dataset.
+
+4. The mean flipper length is `r mean(pull(penguins,flipper_length_mm),na.rm = TRUE) ` .
 
 
-## Q3
+## Q3 Scatterplot by ggplot() function
 
 Make a scatterplot of flipper_length_mm (y) vs bill_length_mm (x); 
 color points using the species variable 
@@ -113,8 +120,8 @@ color points using the species variable
 ggplot(penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
 ```
 
-
 Export your first scatterplot to your project directory using ggsave
+
 ```{r export_scatter}
 ggsave("scatter_flipperVSBill.pdf",height = 4, width = 6)
 ```
